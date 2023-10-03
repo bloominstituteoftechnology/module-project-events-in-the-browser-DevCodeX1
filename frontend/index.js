@@ -74,7 +74,9 @@ function moduleProject2() {
     let arrowDown = evt.key === keys.down;
     let isLeft = evt.key === keys.left;
     let isRight = evt.key === keys.right;
+    let isSpace = evt.key === keys.space
     let targeted = document.querySelector('.targeted')
+
 
     if(arrowUp){
        if(targeted.parentElement.previousElementSibling){
@@ -101,8 +103,32 @@ function moduleProject2() {
     }
 
     // 👉 TASK 4 - Use the space bar to exterminate a mosquito 👈
+    else if (isSpace){
+      let mos = targeted.firstChild
+      
+      
+      if(mos && mos.dataset.status === 'alive'){
+        mos.dataset.status = 'dead'
+        mos.parentElement.style.backgroundColor = 'red'
+      }
+      // 👉 TASK 5 - End the game 👈
 
-    // 👉 TASK 5 - End the game 👈
+      let liveMos = document.querySelectorAll('[data-status=alive]')
+      if(!liveMos.length){
+        let elaps = getTimeElapsed();
+        document.querySelector('p.info').textContent = 
+        `Extermination completed in ${elaps / 1000} seconds!`
+
+        let restart = document.createElement('button')
+        restart.textContent = "Restart"
+        restart.addEventListener('click', () => {
+          location.reload()
+        })
+        document.querySelector('h2').insertAdjacentElement('beforeend', restart)
+       
+      }
+
+    }
      
   })
   
